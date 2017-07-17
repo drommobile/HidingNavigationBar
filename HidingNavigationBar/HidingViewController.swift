@@ -12,6 +12,7 @@ class HidingViewController {
 	
 	var child: HidingViewController?
 	var navSubviews: [UIView]?
+    var fadingIgnoredSubviews: [UIView]?
 	var view: UIView
 	
 	var expandedCenter: ((UIView) -> CGPoint)?
@@ -171,8 +172,15 @@ class HidingViewController {
 			for subView in view.subviews {
 				let isBackgroundView = subView === view.subviews[0]
 				let isViewHidden = subView.isHidden || Float(subView.alpha) < FLT_EPSILON
-				
-				if isBackgroundView == false && isViewHidden == false {
+
+                var shouldFade = true
+                if let ignoredSubviews = fadingIgnoredSubviews {
+                    if ignoredSubviews.contains(subView) {
+                        shouldFade = false
+                    }
+                }
+
+				if isBackgroundView == false && isViewHidden == false && shouldFade {
 					navSubviews?.append(subView)
 				}
 			}

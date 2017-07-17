@@ -120,6 +120,10 @@ open class HidingNavigationBarManager: NSObject, UIScrollViewDelegate, UIGesture
 			return point
 		}
 	}
+
+    open func setNavBarFadingIgnoredViews(_ views: [UIView]) {
+        navBarController.fadingIgnoredSubviews = views
+    }
 	
 	open func addExtensionView(_ view: UIView) {
 		extensionView?.removeFromSuperview()
